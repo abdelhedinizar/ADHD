@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-        btnSignIn = (ActionProcessButton) findViewById(R.id.btnSignIn);
+        btnSignIn = (ActionProcessButton)  findViewById(R.id.btnSignIn);
 
         btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
