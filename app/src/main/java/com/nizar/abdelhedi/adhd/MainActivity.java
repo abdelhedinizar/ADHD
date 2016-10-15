@@ -1,6 +1,7 @@
 package com.nizar.abdelhedi.adhd;
 
 import android.app.ActionBar;
+import android.content.Intent;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -40,5 +41,10 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
+    }
+
+    public void signUp(View view) {
+        Intent intent = new Intent(this,SignUp.class);
+        startActivity(intent);
     }
 }
