@@ -10,6 +10,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -25,7 +26,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FilmActivity extends Activity {
+public class FilmActivity extends AppCompatActivity {
     
     private static final String TAG = "HelloEEG";
 
@@ -70,7 +71,7 @@ public class FilmActivity extends Activity {
         mVideoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mp) {
-                Toast.makeText(HelloEEGActivity.this,"size="+datas.size(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(FilmActivity.this,"size="+datas.size(),Toast.LENGTH_SHORT).show();
             }
         });
         mVideoView.setVideoURI(uri);

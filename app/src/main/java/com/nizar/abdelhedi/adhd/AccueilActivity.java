@@ -15,7 +15,7 @@ public class AccueilActivity extends AppCompatActivity {
     }
 
     public void filmActivityCall(View view) {
-        Intent intent = new Intent(this,filmActivity.class);
+        Intent intent = new Intent(this,FilmsList.class);
         startActivity(intent);
     }
 }

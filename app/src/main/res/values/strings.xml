@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">ADHD</string>
     <string name="title_activity_sign_up">SignUp</string>
+    <string name="title_activity_accueil">Accueil</string>
+    <string name="title_activity_Film">Film</string>
+    <string name="action_play_next">Play Video</string>
 </resources>
