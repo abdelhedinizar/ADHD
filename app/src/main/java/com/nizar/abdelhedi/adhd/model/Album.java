@@ -7,16 +7,16 @@ package com.nizar.abdelhedi.adhd.model;
 public class Album {
 
     private String name;
-    private int numOfSongs;
+    private int concentrationLevelNeeded;
     private int thumbnail;
     private int videoId;
 
     public Album() {
     }
 
-    public Album(String name, int numOfSongs, int thumbnail,int videoId) {
+    public Album(String name, int concentrationLevelNeeded, int thumbnail, int videoId) {
         this.name = name;
-        this.numOfSongs = numOfSongs;
+        this.concentrationLevelNeeded = concentrationLevelNeeded;
         this.thumbnail = thumbnail;
         this.videoId = videoId;
     }
@@ -45,12 +45,12 @@ public class Album {
         this.name = name;
     }
 
-    public int getNumOfSongs() {
-        return numOfSongs;
+    public int getConcentrationLevelNeeded() {
+        return concentrationLevelNeeded;
     }
 
-    public void setNumOfSongs(int numOfSongs) {
-        this.numOfSongs = numOfSongs;
+    public void setConcentrationLevelNeeded(int concentrationLevelNeeded) {
+        this.concentrationLevelNeeded = concentrationLevelNeeded;
     }
 
     public int getThumbnail() {

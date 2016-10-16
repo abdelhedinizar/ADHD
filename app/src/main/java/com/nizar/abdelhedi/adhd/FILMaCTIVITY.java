@@ -1,6 +1,5 @@
 package com.nizar.abdelhedi.adhd;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
@@ -10,6 +9,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.os.PowerManager;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -45,38 +46,49 @@ public class FilmActivity extends AppCompatActivity {
     int lastAttention=100,lastMeditation=100,lastBlink=100;
     VideoView mVideoView;
     Boolean isPaused = false ;
-    ImageView focusImage;
-
+    ImageView focusImage,noConnectionImage;
+    private PowerManager.WakeLock wl;
+    final static int ATTENTION_SEUIL =50;
 		
     /** Called when the activity is first created. */
     @Override
     public void onCreate( Bundle savedInstanceState ) {
         super.onCreate( savedInstanceState );
         setContentView( R.layout.main );
-
+        //setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         findByView();
         checkBluetooth_activerBlink();
         initialise_mVideo();
-        //new  GetContacts(this,cvrtListToJson()).execute();
-
+        PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
+        wl = pm.newWakeLock(PowerManager.FULL_WAKE_LOCK, "DoNjfdhotDimScreen");
+       // new  GetContacts(this,cvrtListToJson()).execute();
         doStuff(tv);
 
 
 
     } /* end onCreate() */
 
+    private void showSnackbar(String msg) {
+        Snackbar snackbar = Snackbar
+                .make(mVideoView, msg, Snackbar.LENGTH_LONG);
+
+        snackbar.show();
+    }
+
     private void initialise_mVideo() {
-        String uriPath = "android.resource://"+getPackageName()+"/"+R.raw.test;
+        String uriPath = "android.resource://"+getPackageName()+"/"+R.raw.tom_jerry;
         Uri uri = Uri.parse(uriPath);
         mVideoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mp) {
                 Toast.makeText(FilmActivity.this,"size="+datas.size(),Toast.LENGTH_SHORT).show();
+                new  GetContacts(FilmActivity.this,cvrtListToJson()).execute();
+
             }
         });
         mVideoView.setVideoURI(uri);
         mVideoView.requestFocus();
-        mVideoView.start();
+        //mVideoView.start();
     }
 
     private JSONObject cvrtListToJson() {
@@ -120,6 +132,7 @@ public class FilmActivity extends AppCompatActivity {
         mVideoView = (VideoView)findViewById(R.id.videoview);
         tv=(TextView) findViewById(R.id.textView);
         focusImage=(ImageView) findViewById(R.id.focusImage);
+        noConnectionImage=(ImageView)findViewById(R.id.no_connectionIV) ;
         tv.setText( "" );
         tv.append( "Android version: " + Integer.valueOf(android.os.Build.VERSION.SDK) + "\n" );
         datas.add(new Data(5,6,5));
@@ -157,17 +170,22 @@ public class FilmActivity extends AppCompatActivity {
     	                	tv.append( "Connecting...\n" );
     	                	break;		                    
                         case TGDevice.STATE_ERR_NO_DEVICE:
-                            tv.append( "No Bluetooth devices paired.  Pair your device and try again.\n" );
+                            showSnackbar( "No Bluetooth devices paired.  Pair your device and try again.\n" );
                             break;
     	                case TGDevice.STATE_NOT_FOUND:
-    	                	tv.append( "Could not connect any of the paired BT devices.  Turn them on and try again.\n" );
+                            showSnackbar("Could not connect any of the paired BT devices");
+                            tv.append( "Could not connect any of the paired BT devices.  Turn them on and try again.\n" );
     	                	break;
                         case TGDevice.STATE_CONNECTED:
-                            tv.append( "Connected.\n" );
+                            showSnackbar("Connected");
+                            noConnectionImage.setVisibility(View.GONE);
+                            //mVideoView.start();
+                           // tv.append( "Connected.\n" );
                             tgDevice.start();
                             break;
     	                case TGDevice.STATE_DISCONNECTED:
-    	                	tv.append( "Disconnected.\n" );
+                            showSnackbar("Disconnected");
+                            tv.append( "Disconnected.\n" );
                     } /* end switch on msg.arg1 */
 
                     break;
@@ -179,7 +197,7 @@ public class FilmActivity extends AppCompatActivity {
                 case TGDevice.MSG_RAW_DATA:
                    // tv.append( "PoorSignal: " + msg.arg1 + "\n" );
 
-                	/* Handle raw EEG/EKG data here */
+                	/*  raw EEG/EKG data here */
                 	break;
                 
                 case TGDevice.MSG_HEART_RATE:
@@ -188,7 +206,7 @@ public class FilmActivity extends AppCompatActivity {
                 
                 case TGDevice.MSG_ATTENTION:
                     lastAttention=msg.arg1;
-                    if(lastAttention>60) {
+                    if(lastAttention> ATTENTION_SEUIL) {
                         isPaused=false;
                         mVideoView.start();
                         focusImage.setVisibility(View.GONE);
@@ -200,12 +218,12 @@ public class FilmActivity extends AppCompatActivity {
                     break;
                 
                 case TGDevice.MSG_MEDITATION:
-                    tv.append( "Meditation: " + msg.arg1 + "\n" );
+                    //tv.append( "Meditation: " + msg.arg1 + "\n" );
                     lastMeditation=msg.arg1;
                     break;
 
                 case TGDevice.MSG_BLINK:
-                	tv.append( "Blink: " + msg.arg1 + "\n" );
+                	//tv.append( "Blink: " + msg.arg1 + "\n" );
                     lastBlink=msg.arg1;
                     break;
     
@@ -216,7 +234,7 @@ public class FilmActivity extends AppCompatActivity {
 
 
 
-            if(!isPaused  && lastAttention < 60 ){
+            if(!isPaused  && lastAttention < ATTENTION_SEUIL){
                 mVideoView.pause();
                 isPaused=true ;
                 focusImage.setVisibility(View.VISIBLE);
@@ -245,7 +263,8 @@ public class FilmActivity extends AppCompatActivity {
 
         Context context;
         ProgressDialog pDialog;
-        private static final String url = "http://192.168.1.176:3001/day";
+       // private static final String url = "http://192.168.1.176:3001/day";
+        private static final String url="https://whispering-garden-24422.herokuapp.com/day";
 
 
         JSONObject json;
@@ -300,5 +319,15 @@ public class FilmActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        wl.release();
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        wl.acquire();
+    }
 }

@@ -104,39 +104,33 @@ public class FilmsList extends AppCompatActivity {
                     R.drawable.image4,
                     R.drawable.image5,
                     R.drawable.image6,
-                    R.drawable.image7,
-                    R.drawable.image9,
-                    R.drawable.image10};
+                    R.drawable.image7
+                    };
 
-            Album a = new Album("True Romance", 13, covers[0],R.raw.test);
+            Album a = new Album("Tom and jerry", 1, covers[0],R.raw.tom_jerry);
             albumList.add(a);
 
-            a = new Album("Xscpae", 8, covers[1],R.raw.test);
+            a = new Album("Xscpae", 2, covers[1],R.raw.tom_jerry);
             albumList.add(a);
 
-            a = new Album("Maroon 5", 11, covers[2],R.raw.test);
+            a = new Album("Maroon 5", 3, covers[2],R.raw.tom_jerry);
             albumList.add(a);
 
-            a = new Album("Born to Die", 12, covers[3],R.raw.test);
+            a = new Album("Born to Die", 4, covers[3],R.raw.tom_jerry);
             albumList.add(a);
 
-            a = new Album("Honeymoon", 14, covers[4],R.raw.test);
+            a = new Album("Honeymoon", 5, covers[4],R.raw.tom_jerry);
             albumList.add(a);
 
-            a = new Album("I Need a Doctor", 1, covers[5],R.raw.test);
+            a = new Album("I Need a Doctor", 6, covers[5],R.raw.tom_jerry);
             albumList.add(a);
 
-            a = new Album("Loud", 11, covers[6],R.raw.test);
+            a = new Album("Loud", 7, covers[6],R.raw.tom_jerry);
             albumList.add(a);
 
-            a = new Album("Legend", 14, covers[7],R.raw.test);
+            a = new Album("Legend", 8, covers[7],R.raw.tom_jerry);
             albumList.add(a);
 
-            a = new Album("Hello", 11, covers[8],R.raw.test);
-            albumList.add(a);
-
-            a = new Album("Greatest Hits", 17, covers[9],R.raw.test);
-            albumList.add(a);
 
             adapter.notifyDataSetChanged();
         }

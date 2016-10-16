@@ -19,7 +19,6 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.nizar.abdelhedi.adhd.FilmActivity;
-import com.nizar.abdelhedi.adhd.FilmsList;
 import com.nizar.abdelhedi.adhd.R;
 import com.nizar.abdelhedi.adhd.model.Album;
 
@@ -64,7 +63,7 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.MyViewHold
     public void onBindViewHolder(final MyViewHolder holder, int position) {
         Album album = albumList.get(position);
         holder.title.setText(album.getName());
-        holder.count.setText(album.getNumOfSongs() + " songs");
+        holder.count.setText("Level "+album.getConcentrationLevelNeeded());
 
         // loading album cover using Glide library
         Glide.with(mContext).load(album.getThumbnail()).into(holder.thumbnail);
@@ -73,8 +72,6 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.MyViewHold
             @Override
             public void onClick(View view) {
                 showPopupMenu(holder.overflow);
-                Intent intent = new Intent(mContext, FilmActivity.class);
-                mContext.startActivity(intent);
 
             }
         });
@@ -98,13 +95,16 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.MyViewHold
     class MyMenuItemClickListener implements PopupMenu.OnMenuItemClickListener {
 
         public MyMenuItemClickListener() {
-        }
+         }
 
         @Override
         public boolean onMenuItemClick(MenuItem menuItem) {
             switch (menuItem.getItemId()) {
                 case R.id.action_play_next:
                     Toast.makeText(mContext, "Play next", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(mContext, FilmActivity.class);
+                    mContext.startActivity(intent);
+
                     return true;
                 default:
             }
