@@ -184,7 +184,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-                        Intent intent = new Intent(getApplicationContext()  , FilmActivity.class);
+                        Intent intent = new Intent(getApplicationContext()  , AccueilActivity.class);
                         startActivity(intent);
 
 
