@@ -169,7 +169,7 @@ public class MainActivity extends AppCompatActivity {
 //            Dismiss the progress dialog
             pDialog.dismiss();
             final String result2=result;
-            if(result!=null){
+            if(result!=null&!result.equals("no")){
 
                 Log.i("test ", "mriguel ");
                 runOnUiThread(new Runnable() {

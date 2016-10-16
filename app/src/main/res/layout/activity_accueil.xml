@@ -63,7 +63,7 @@
             <TextView
                 android:id="@+id/count2"
                 android:textColor="@color/blue_pressed"
-                android:text="my name is nizar Abdelhedi this is a gridview "
+                android:text="improve your concentration while watching movies"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/title2"
@@ -116,7 +116,7 @@
             <TextView
                 android:id="@+id/count"
                 android:textColor="@color/blue_pressed"
-                android:text="my name is nizar Abdelhedi this is a gridview "
+                android:text="improve your concentration while playing games"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/title"
@@ -171,7 +171,7 @@
                 <TextView
                     android:id="@+id/count3"
                     android:textColor="@color/blue_pressed"
-                    android:text="my name is nizar Abdelhedi this is a gridview "
+                    android:text="improve your concentration while reading "
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/title3"
